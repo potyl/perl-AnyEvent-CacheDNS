@@ -68,11 +68,6 @@ sub register {
 
 AnyEvent::CacheDNS - Simple DNS resolver with caching
 
-=head1 AUTHOR
-
-Emmanuel Rodriguez <potyl@cpan.org>
-
-
 =head1 SYNOPSIS
 
 	use AnyEvent::Impl::Perl;
@@ -102,6 +97,10 @@ passing the tag C<:register> in the C<use> statement.
 =head2 register
 
 Registers a new DNS cache instance as AnyEvent's global DNS resolver.
+
+=head1 AUTHOR
+
+Emmanuel Rodriguez <potyl@cpan.org>
 
 =head1 COPYRIGHT
 
