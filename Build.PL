@@ -30,6 +30,7 @@ my $build = Module::Build->new(
 
 	build_requires => {
 		%configure_requires,
+		'Test::More' => 0
 	},
 
 	meta_merge => {
