@@ -41,7 +41,6 @@ sub resolve {
 	}
 
 	# Performe a request and cache the value
-print "request $qname $qtype\n";
 	$self->SUPER::resolve(
 		$qname,
 		$qtype,
