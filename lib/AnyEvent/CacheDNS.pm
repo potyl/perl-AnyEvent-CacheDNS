@@ -9,15 +9,15 @@ use Data::Dumper;
 our $VERSION = '0.01';
 
 sub import {
-    my $package = shift;
-    my @options = @_;
-    
-    while (@options) {
-        my $key = shift @options;
-        if ($key eq ':register') {
-            $package->register();
-        }
-    }
+	my $package = shift;
+	my @options = @_;
+	
+	while (@options) {
+		my $key = shift @options;
+		if ($key eq ':register') {
+			$package->register();
+		}
+	}
 }
 
 
@@ -36,7 +36,7 @@ sub resolve {
 	# If we have the value cached then we serve it from there
 	my $cache = $self->{_cache}{$qtype} ||= {};
 	if (exists $cache->{$qname}) {
-        $cb->($cache->{$qname} ? ($cache->{$qname}) : ());
+		$cb->($cache->{$qname} ? ($cache->{$qname}) : ());
 		return;
 	}
 
@@ -57,8 +57,8 @@ sub resolve {
 
 
 sub register {
-    my $class = shift;
-    $AnyEvent::DNS::RESOLVER = $class->new();
+	my $class = shift;
+	$AnyEvent::DNS::RESOLVER = $class->new();
 }
 
 
@@ -75,17 +75,17 @@ Emmanuel Rodriguez <potyl@cpan.org>
 
 =head1 SYNOPSIS
 
-    use AnyEvent::Impl::Perl;
-    use AnyEvent;
-    use AnyEvent::HTTP;
+	use AnyEvent::Impl::Perl;
+	use AnyEvent;
+	use AnyEvent::HTTP;
 	
-    # Register our DNS resolver as the default resolver
-    use AnyEvent::CacheDNS ':register';
-    
-    # Use AnyEvent as ususal
-    my $cond = AnyEvent->condvar;
-    http_get "http://search.cpan.org/", sub { $cond->send(); };
-    $cond->recv();
+	# Register our DNS resolver as the default resolver
+	use AnyEvent::CacheDNS ':register';
+	
+	# Use AnyEvent as ususal
+	my $cond = AnyEvent->condvar;
+	http_get "http://search.cpan.org/", sub { $cond->send(); };
+	$cond->recv();
 
 =head1 DESCRIPTION
 
