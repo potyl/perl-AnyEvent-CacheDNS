@@ -11,6 +11,7 @@ use AnyEvent::CacheDNS ':register';
 use AnyEvent::DNS;
 use Data::Dumper;
 
+
 sub main {
 
 	# Make sure we timeout faster
@@ -38,5 +39,7 @@ sub main {
 
 	return 0;
 }
+
+
 
 exit main() unless caller;
