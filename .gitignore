@@ -1,6 +1,7 @@
 Build
 META.yml
 MYMETA.yml
-AnyEvent-CacheDNS-*.tar.gz
+AnyEvent-CacheDNS-*
 _build
 blib
+.DS_Store

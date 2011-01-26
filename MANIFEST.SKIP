@@ -4,3 +4,5 @@ _build
 ^\.git/
 ^\.gitignore$
 blib
+AnyEvent-CacheDNS-.*
+^\.DS_Store$
