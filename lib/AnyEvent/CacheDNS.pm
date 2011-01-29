@@ -28,7 +28,8 @@ sub resolve {
 	# If we have the value cached then we serve it from there
 	my $cache = $self->{_cache}{$qtype} ||= {};
 	if (exists $cache->{$qname}) {
-		$cb->($cache->{$qname} ? ($cache->{$qname}) : ());
+		my $response = $cache->{$qname};
+		$cb->($response ? ($response) : ());
 		return;
 	}
 
