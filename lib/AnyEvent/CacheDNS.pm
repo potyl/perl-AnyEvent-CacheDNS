@@ -39,9 +39,11 @@ sub resolve {
 		$qtype,
 		%opt,
 		sub{
-			# Note that the first time multiple queries could be done to the
-			# same arguments if the value is not cached already. This is why we
-			# assign a value only if we don't have a good value yet.
+			# Note that it could be possible that the multiple DNS request are
+			# done a new qname. For instance if an application is doing multiple
+			# concurrent HTTP request to the same host then there will be at
+			# least one DNS request per HTTP request. That's why we only cache
+			# the results of the first DNS request that's successful.
 			$cache->{$qname} ||= @_ ? $_[0] : undef;
 			$cb->(@_);
 		}
