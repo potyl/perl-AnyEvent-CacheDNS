@@ -21,14 +21,6 @@ sub import {
 }
 
 
-sub new {
-	my $class = shift;
-	my $self = $class->SUPER::new(@_);
-	$self->{_cache} = {};
-	return $self;
-}
-
-
 sub resolve {
 	my $cb = pop @_;
 	my ($self, $qname, $qtype, %opt) = @_;
