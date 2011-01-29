@@ -24,14 +24,15 @@ sub main {
 	my $cv;
 
 	$cv = AnyEvent->condvar;
-	$dns->resolve("www.google.sk", 'a', sub { $cv->send(@_) });
+	$dns->resolve("www.bratislavafestival.sk", 'a', sub { $cv->send(@_) });
 	my ($first) = $cv->recv();
 	ok($first, "First DNS lookup");
 
 	$cv = AnyEvent->condvar;
-	$dns->resolve("www.google.sk", 'a', sub { $cv->send(@_) });
+	$dns->resolve("www.bratislavafestival.sk", 'a', sub { $cv->send(@_) });
 	my ($second) = $cv->recv();
 	ok($second, "Second DNS lookup");
+
 	is_deeply($first, $second, "DNS records identical");
 	ok($first == $second, "DNS records same ref");
 
