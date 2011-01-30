@@ -1,6 +1,9 @@
-0.02 - Sat Jan 29 18:44:03 CET 2011
+0.03 Sun Jan 30 23:17:32 CET 2011
+	- Documentation and unit tests updates
+
+0.02 Sat Jan 29 18:44:03 CET 2011
 	- Bug fixes: register() creates the resolver as AnyEvent::DNS::resolver()
 	  does
 
-0.01 - Wed Jan 26 21:31:29 CET 2011
+0.01 Wed Jan 26 21:31:29 CET 2011
 	- First version
