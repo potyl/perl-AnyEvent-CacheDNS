@@ -65,7 +65,6 @@ AnyEvent::CacheDNS - Simple DNS resolver with caching
 
 =head1 SYNOPSIS
 
-	use AnyEvent::Impl::Perl;
 	use AnyEvent;
 	use AnyEvent::HTTP;
 	

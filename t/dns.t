@@ -5,7 +5,6 @@ use warnings;
 
 use Test::More tests => 9;
 
-use AnyEvent::Impl::Perl;
 use AnyEvent;
 use AnyEvent::CacheDNS ':register';
 use AnyEvent::DNS;
