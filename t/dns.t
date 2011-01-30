@@ -13,10 +13,9 @@ use Data::Dumper;
 
 sub main {
 
-	# Make sure we timeout faster
+	# Make sure we timeout fast
 	my $dns = AnyEvent::DNS::resolver;
 	isa_ok($dns, 'AnyEvent::CacheDNS');
-
 	$dns->{timeout} = [0.5];
 	$dns->_compile();
 
