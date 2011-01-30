@@ -24,12 +24,12 @@ sub main {
 
 	my $host = "www.bratislavafestival.sk";
 	$cv = AnyEvent->condvar;
-	$dns->resolve($host, 'a', sub { $cv->send(@_) });
+	$dns->resolve($host, 'a', $cv);
 	my ($first) = $cv->recv();
 	ok($first, "First DNS lookup");
 
 	$cv = AnyEvent->condvar;
-	$dns->resolve($host, 'a', sub { $cv->send(@_) });
+	$dns->resolve($host, 'a', $cv);
 	my ($second) = $cv->recv();
 	ok($second, "Second DNS lookup");
 
