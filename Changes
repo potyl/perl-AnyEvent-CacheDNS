@@ -1,5 +1,7 @@
 0.04 Wed Feb  2 04:54:20 CET 2011
 	- Unit test bug fix (pass even if host can't do DNS lookups)
+	- Bug fixes: register() creates the resolver as AnyEvent::DNS::resolver()
+	  does. Version 0.02 was missing the commit that enabled this
 
 0.03 Sun Jan 30 23:17:32 CET 2011
 	- Documentation and unit tests updates
