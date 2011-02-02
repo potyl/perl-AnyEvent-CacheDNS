@@ -25,27 +25,50 @@ sub main {
 	$cv = AnyEvent->condvar;
 	$dns->resolve($host, 'a', $cv);
 	my ($first) = $cv->recv();
-	ok($first, "First DNS lookup");
+	if (defined $first) {
+		ok($first, "First DNS lookup");
+	}
+	else {
+		# DNS request failed, ok as long as the second one fails too we're ok
+		SKIP: {
+			skip "DNS lookup for $host failed", 1;
+		};
+	}
 
 	$cv = AnyEvent->condvar;
 	$dns->resolve($host, 'a', $cv);
 	my ($second) = $cv->recv();
-	ok($second, "Second DNS lookup");
-
-	is_deeply($first, $second, "DNS records identical");
-	ok($first == $second, "DNS records same ref");
 
 	# Inspect the cache
 	ok(keys %{ $dns->{_cache} } == 1, "DNS cache was used");
 	ok(keys %{ $dns->{_cache}{a} } == 1, "DNS cache has a sinle host");
+	my $cached = $dns->{_cache}{a}{$host};
 
-	my @cached = @{ $dns->{_cache}{a}{$host} };
-	ok(pop @cached, "IP address is true");
-	is_deeply(\@cached, [$host, 'a', 'in'], "DNS response matches");
+
+	if (! defined $first) {
+		# DNS request failed, ok as long as the second one fails too we're ok
+		ok(! defined $second, "Second DNS lookup failed, just as the first one");
+
+		# Inspect the cache
+		ok(! defined $cached, "Cache has no record for host");
+
+		SKIP: {
+			skip "DNS lookup for $host failed", 3;
+		};
+
+		return 0;
+	}
+
+	ok($second, "Second DNS lookup");
+	is_deeply($first, $second, "DNS records identical");
+	ok($first == $second, "DNS records same ref");
+
+	# Check that the cache as a DNS record
+	ok(pop @{ $cached }, "IP address is true");
+	is_deeply($cached, [$host, 'a', 'in'], "DNS response matches");
 
 	return 0;
 }
-
 
 
 exit main() unless caller;
