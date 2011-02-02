@@ -53,7 +53,25 @@ sub resolve {
 
 sub register {
 	my $class = shift;
-	$AnyEvent::DNS::RESOLVER = $class->new();
+
+	my @args = (
+		untaint => 1,
+	);
+
+	my $key = 'PERL_ANYEVENT_MAX_OUTSTANDING_DNS';
+	push @args, max_outstanding => $ENV{$key} * 1 || 1 if exists $ENV{$key};
+
+	my $resolver = $class->new(@args);
+
+	if (exists $ENV{PERL_ANYEVENT_RESOLV_CONF}) {
+		my $conf = $ENV{PERL_ANYEVENT_RESOLV_CONF};
+		$resolver->_parse_resolv_conf_file($conf) if length $conf;
+	}
+	else {
+		$resolver->os_config();
+	}
+
+	$AnyEvent::DNS::RESOLVER = $resolver;
 }
 
 
