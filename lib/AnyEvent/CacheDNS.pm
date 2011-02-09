@@ -39,8 +39,8 @@ sub resolve {
 		$qtype,
 		%opt,
 		sub{
-			# Note that it could be possible that the multiple DNS request are
-			# done a new qname. For instance if an application is doing multiple
+			# Note that it could be possible that multiple DNS request are done
+			# for a new qname. For instance if an application is doing multiple
 			# concurrent HTTP request to the same host then there will be at
 			# least one DNS request per HTTP request. That's why we only cache
 			# the results of the first DNS request that's successful.
