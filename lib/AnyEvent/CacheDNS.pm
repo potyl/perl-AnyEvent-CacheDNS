@@ -6,7 +6,13 @@ use base 'AnyEvent::DNS';
 
 use Data::Dumper;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
+
+# detect AnyEvent >= 6.0.1
+my $_ae_6x = version->parse(AnyEvent->VERSION()) >= version->parse('v6.0.1');
+
+# default TTL for AnyEvent < 6.0.1
+my $_default_ttl = undef;
 
 sub import {
 	my $package = shift;
@@ -33,7 +39,7 @@ sub resolve {
 		return;
 	}
 
-	# Performe a request and cache the value
+	# Perform a request and cache the value
 	$self->SUPER::resolve(
 		$qname,
 		$qtype,
@@ -45,6 +51,28 @@ sub resolve {
 			# least one DNS request per HTTP request. That's why we only cache
 			# the results of the first DNS request that's successful.
 			$cache->{$qname} ||= @_ ? $_[0] : undef;
+
+			# respect TTL and be backwards compatible with AnyEvent < 6.x
+			my $ttl;
+			if ($_ae_6x) {
+				if (defined $_default_ttl) {
+					$ttl = $_default_ttl;
+				} else {
+					no warnings;
+					$ttl = int($_[0]->[3]);
+				}
+			} else {
+				$ttl = $_default_ttl ? $_default_ttl : 0;
+			}
+
+			if ($ttl > 0) {
+				# create expire timer
+				my $wt; $wt  = AE::timer($ttl, 0, sub {
+				$wt = undef;
+				delete($cache->{$qname});
+				});
+			}
+
 			$cb->(@_);
 		}
 	);
@@ -69,6 +97,11 @@ sub register {
 	}
 	else {
 		$resolver->os_config();
+	}
+
+	if (exists $ENV{PERL_ANYEVENT_DNS_TTL}) {
+		no warnings;
+		$_default_ttl = abs(int($ENV{PERL_ANYEVENT_DNS_TTL}));
 	}
 
 	$AnyEvent::DNS::RESOLVER = $resolver;
@@ -109,6 +142,37 @@ passing the tag C<:register> in the C<use> statement.
 =head2 register
 
 Registers a new DNS cache instance as AnyEvent's global DNS resolver.
+
+=head2  ENVIRONMENT
+
+=over
+
+=item C<PERL_ANYEVENT_DNS_TTL>
+
+The effect of setting this variable differs depending on L<AnyEvent> version.
+
+=over
+
+=item AnyEvent 5.x
+
+Default DNS response record cache TTL for older AnyEvent versions.
+L<AnyEvent::DNS> <= 6.x doesn't report record TTL and records get
+cached for infinite amount of time, therefore running program won't
+detect if cached DNS record will change.
+
+B<NOTE>: Setting this variable to B<0> disables purging records from
+cache.
+
+=item AnyEvent 6.x
+
+Newer versions of AnyEvent report DNS record TTL so records will be
+purged from cache after B<their> TTL expires. Setting this variable to any
+positive integer B<OVERRIDE> ttl for all records to the specified
+value, setting variable to B<0> disables purging records from cache.
+
+=back
+
+=back
 
 =head1 AUTHOR
 
