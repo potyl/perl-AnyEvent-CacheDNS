@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 11;
 
 use AnyEvent;
 use AnyEvent::CacheDNS ':register';
@@ -65,7 +65,9 @@ sub main {
 
 	# Check that the cache as a DNS record
 	ok(pop @{ $cached }, "IP address is true");
-	is_deeply($cached, [$host, 'a', 'in'], "DNS response matches");
+	ok($cached->[0] eq $host, "Response packet host matches");
+	ok($cached->[1] eq 'a', "Response packet record type matches");
+	ok($cached->[2] eq 'in', "Response packet record class matches");
 
 	return 0;
 }
