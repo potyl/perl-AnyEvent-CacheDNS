@@ -1,3 +1,6 @@
+0.05 Sun Dec  4 17:08:02 CET 2011
+	- Add DNS record TTL support (patch by Brane F. Gračnar)
+
 0.04 Wed Feb  2 04:54:20 CET 2011
 	- Unit test bug fix (pass even if host can't do DNS lookups)
 	- Bug fixes: register() creates the resolver as AnyEvent::DNS::resolver()
