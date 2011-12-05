@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use base 'AnyEvent::DNS';
 
-use Data::Dumper;
-
 our $VERSION = '0.05';
 
 # Detect AnyEvent >= 6.0.1

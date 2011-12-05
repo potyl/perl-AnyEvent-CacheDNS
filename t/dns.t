@@ -8,8 +8,6 @@ use Test::More tests => 11;
 use AnyEvent;
 use AnyEvent::CacheDNS ':register';
 use AnyEvent::DNS;
-use Data::Dumper;
-
 
 sub main {
 
