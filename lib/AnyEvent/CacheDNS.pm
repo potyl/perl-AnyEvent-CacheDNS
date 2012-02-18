@@ -6,7 +6,7 @@ use base 'AnyEvent::DNS';
 
 use Data::Dumper;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 # Detect AnyEvent >= 6.0.1
 my $IS_AE_6X = $^V ge "v5.10.0"
