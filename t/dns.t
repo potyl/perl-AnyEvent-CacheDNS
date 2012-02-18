@@ -21,7 +21,7 @@ sub main {
 
 	my $cv;
 
-	my $host = "www.bratislavafestival.sk";
+	my $host = 'bapm.meon.eu';
 	$cv = AnyEvent->condvar;
 	$dns->resolve($host, 'a', $cv);
 	my ($first) = $cv->recv();
