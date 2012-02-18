@@ -65,9 +65,9 @@ sub main {
 
 	# Check that the cache as a DNS record
 	ok(pop @{ $cached }, "IP address is true");
-	ok($cached->[0] eq $host, "Response packet host matches");
-	ok($cached->[1] eq 'a', "Response packet record type matches");
-	ok($cached->[2] eq 'in', "Response packet record class matches");
+	is($cached->[0], $host, "Response packet host matches");
+	is($cached->[1], 'a', "Response packet record type matches");
+	is($cached->[2], 'in', "Response packet record class matches");
 
 	return 0;
 }
