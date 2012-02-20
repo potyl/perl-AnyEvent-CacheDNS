@@ -6,3 +6,4 @@ _build
 blib
 AnyEvent-CacheDNS-.*
 ^\.DS_Store$
+^MYMETA\.json$
