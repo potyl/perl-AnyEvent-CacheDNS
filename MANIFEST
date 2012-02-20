@@ -6,3 +6,4 @@ MANIFEST.SKIP
 META.yml
 t/dns.t
 README
+META.json
