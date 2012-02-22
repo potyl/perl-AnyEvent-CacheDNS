@@ -1,7 +1,7 @@
 Build.PL
 lib/AnyEvent/CacheDNS.pm
 Changes
-MANIFEST			This list of files
+MANIFEST
 MANIFEST.SKIP
 META.yml
 t/dns.t
