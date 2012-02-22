@@ -19,7 +19,7 @@ my $DEFAULT_TTL = undef;
 sub import {
 	my $package = shift;
 	my @options = @_;
-	
+
 	while (@options) {
 		my $key = shift @options;
 		if ($key eq ':register') {
