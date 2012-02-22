@@ -1,7 +1,6 @@
 Build
 META.yml
 MYMETA.yml
-MYMETA.json
 AnyEvent-CacheDNS-*
 _build
 blib
