@@ -1,3 +1,6 @@
+0.07 Wed Feb 22 21:31:53 CET 2012
+	- Works now with perl 5.10.0
+
 0.06 Sat Feb 18 09:05:07 CET 2012
 	- Backport to perl 5.8
 
