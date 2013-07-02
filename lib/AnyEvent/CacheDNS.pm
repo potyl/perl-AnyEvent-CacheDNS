@@ -55,13 +55,10 @@ sub resolve {
 			$cache->{$qname} ||= @_ ? $_[0] : undef;
 
 			# Respect TTL and be backwards compatible with AnyEvent < 6.x
-			my $ttl;
-			if ($IS_AE_6X) {
-				$ttl = defined $DEFAULT_TTL ? $DEFAULT_TTL : int($_[0]->[3] || 0);
-			}
-			else {
-				$ttl = defined $DEFAULT_TTL ? $DEFAULT_TTL : 0;
-			}
+			my $ttl =
+				defined $DEFAULT_TTL ? $DEFAULT_TTL :
+				$IS_AE_6X && @_ ? int($_[0]->[3] || 0) :
+				0;
 
 			if ($ttl > 0) {
 				# Create expire timer
